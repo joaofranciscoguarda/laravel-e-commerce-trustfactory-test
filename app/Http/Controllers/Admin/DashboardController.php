@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function index(): Response
     {
         // Today's revenue
-        $todayRevenue = (float) Order::today()
+        $todayRevenue = Order::today()
             ->whereNotIn('status', ['cancelled'])
             ->sum('total');
 

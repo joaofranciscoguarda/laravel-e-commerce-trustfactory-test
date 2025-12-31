@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -107,19 +109,19 @@ class Item extends Model
 
         return $remainingToReserve === 0;
     }
-
-    public function scopeActive($query)
+    #[Scope]
+    protected function active(Builder $query): void
     {
-        return $query->where('is_active', true);
+        $query->where('is_active', true);
     }
-
-    public function scopeInStock($query)
+    #[Scope]
+    protected function inStock(Builder $query): void
     {
-        return $query->where('available_stock', '>', 0);
+        $query->where('available_stock', '>', 0);
     }
-
-    public function scopeLowStock($query)
+    #[Scope]
+    protected function lowStock(Builder $query): void
     {
-        return $query->whereColumn('available_stock', '<=', 'low_stock_threshold');
+        $query->whereColumn('available_stock', '<=', 'low_stock_threshold');
     }
 }

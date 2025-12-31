@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 
 class DashboardController extends Controller
 {
-    public function index(): Response
+    public function index(): Response | RedirectResponse
     {
         $user = auth()->user();
+
+        if ($user->isAdmin()) {
+            return redirect()->action([AdminDashboardController::class, 'index']);
+        }
 
         // Get recent orders
         $recentOrders = $user->orders()

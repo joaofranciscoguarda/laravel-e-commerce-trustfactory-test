@@ -114,7 +114,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                         </Link>
 
                         <div className="border-t-2 border-foreground pt-4">
-                            <p className="mb-2 px-4 font-heading text-xs tracking-wider uppercase text-muted-foreground">
+                            <p className="mb-2 px-4 font-heading text-xs tracking-wider text-muted-foreground uppercase">
                                 Settings
                             </p>
                             <Link
@@ -188,7 +188,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                         className="flex flex-col items-center justify-center gap-1 transition-colors hover:bg-muted"
                     >
                         <Home className="h-5 w-5" />
-                        <span className="font-sans text-xs uppercase">Home</span>
+                        <span className="font-sans text-xs uppercase">
+                            Home
+                        </span>
                     </Link>
                     <Link
                         href="/shop/search"
@@ -204,7 +206,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                         className="relative flex flex-col items-center justify-center gap-1 transition-colors hover:bg-muted"
                     >
                         <ShoppingCart className="h-5 w-5" />
-                        <span className="font-sans text-xs uppercase">Cart</span>
+                        <span className="font-sans text-xs uppercase">
+                            Cart
+                        </span>
                         {cartCount > 0 && (
                             <span className="absolute top-2 right-1/4 flex h-5 w-5 items-center justify-center border-2 border-foreground bg-foreground font-sans text-xs text-background">
                                 {cartCount}

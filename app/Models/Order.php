@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -78,29 +80,34 @@ class Order extends Model
         $this->update(['status' => 'cancelled']);
     }
 
-    public function scopePending($query)
+    #[Scope]
+    protected function pending(Builder $query): void
     {
-        return $query->where('status', 'pending');
+        $query->where('status', 'pending');
     }
 
-    public function scopeProcessing($query)
+    #[Scope]
+    protected function processing(Builder $query): void
     {
-        return $query->where('status', 'processing');
+        $query->where('status', 'processing');
     }
 
-    public function scopeCompleted($query)
+    #[Scope]
+    protected function completed(Builder $query): void
     {
-        return $query->where('status', 'completed');
+        $query->where('status', 'completed');
     }
 
-    public function scopeCancelled($query)
+    #[Scope]
+    protected function cancelled(Builder $query): void
     {
-        return $query->where('status', 'cancelled');
+        $query->where('status', 'cancelled');
     }
 
-    public function scopeToday($query)
+    #[Scope]
+    protected function today(Builder $query): void
     {
-        return $query->whereDate('created_at', today());
+        $query->whereDate('created_at', today());
     }
 
     public static function generateOrderNumber(): string
