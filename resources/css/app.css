@@ -1,21 +1,43 @@
 @import 'tailwindcss';
 
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
 @custom-variant dark (&:is(.dark *));
 
-@theme {
-    --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+@font-face {
+    font-family: 'Alkhemikal';
+    src: url('/fonts/Alkhemikal.ttf') format('truetype');
+    size-adjust: 145%;
+    font-weight: normal;
+    font-style: normal;
+}
 
-    --radius-lg: var(--radius);
-    --radius-md: calc(var(--radius) - 2px);
-    --radius-sm: calc(var(--radius) - 4px);
+@font-face {
+    font-family: 'Alagard Extended';
+    src: url('/fonts/AlagardExtended.ttf') format('truetype');
+    size-adjust: 125%;
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VCR OSD Mono';
+    src: url('/fonts/VCR_OSD_MONO_1.001.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@theme {
+    --font-sans: 'VCR OSD Mono', monospace;
+    --font-title: 'Alagard Extended', sans-serif;
+    --font-heading: 'Alagard Extended', sans-serif;
+
+    --radius-lg: 0px;
+    --radius-md: 0px;
+    --radius-sm: 0px;
 
     --color-background: var(--background);
     --color-foreground: var(--foreground);
@@ -86,7 +108,7 @@
     --chart-3: oklch(0.398 0.07 227.392);
     --chart-4: oklch(0.828 0.189 84.429);
     --chart-5: oklch(0.769 0.188 70.08);
-    --radius: 0.625rem;
+    --radius: 0px;
     --sidebar: oklch(0.985 0 0);
     --sidebar-foreground: oklch(0.145 0 0);
     --sidebar-primary: oklch(0.205 0 0);
@@ -138,6 +160,32 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background font-sans text-foreground;
+        image-rendering: pixelated;
+        -ms-interpolation-mode: nearest-neighbor;
+    }
+
+    img {
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+    }
+}
+
+@layer utilities {
+    .font-title {
+        font-family: var(--font-title);
+    }
+
+    .font-heading {
+        font-family: var(--font-heading);
+    }
+
+    .font-sans {
+        font-family: var(--font-sans);
+    }
+
+    .border-sharp {
+        border-radius: 0;
     }
 }

@@ -27,6 +27,7 @@ export interface SharedData {
     quote: { message: string; author: string };
     auth: Auth;
     sidebarOpen: boolean;
+    cartCount: number;
     [key: string]: unknown;
 }
 
@@ -37,6 +38,7 @@ export interface User {
     avatar?: string;
     email_verified_at: string | null;
     two_factor_enabled?: boolean;
+    role: 'admin' | 'customer';
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
