@@ -228,36 +228,38 @@ class ItemSeeder extends Seeder
 
     private function copyDarkImages(): void
     {
-        $this->command->info('Copying dark fantasy images...');
+        $this->command->info('Fetching dark fantasy images from public S3 bucket...');
 
-        $sourceDir = base_path('../dark-images');
-        $destinationDir = storage_path('app/public/items');
+        $sourceBucket = 'dark-fantasy-e-commerce-laravel-test';
+        $region = 'us-east-1';
+        $baseUrl = "https://{$sourceBucket}.s3.{$region}.amazonaws.com";
 
-        if (! File::exists($sourceDir)) {
-            $this->command->warn("Source directory not found: {$sourceDir}");
-            $this->command->warn('Skipping image copy. Please ensure dark-images directory exists.');
+        $destinationDisk = 'public';
+        $destinationPath = 'items';
 
-            return;
-        }
-
-        // Create destination directory if it doesn't exist
-        if (! File::exists($destinationDir)) {
-            File::makeDirectory($destinationDir, 0755, true);
-        }
-
-        // Copy images 1-22
+        // Fetch and copy images 1-22
         for ($i = 1; $i <= 22; $i++) {
-            $sourceFile = "{$sourceDir}/{$i}.jpg";
-            $destinationFile = "{$destinationDir}/{$i}.jpg";
+            $sourceUrl = "{$baseUrl}/{$i}.jpg";
+            $destinationFile = "{$destinationPath}/{$i}.jpg";
 
-            if (File::exists($sourceFile)) {
-                File::copy($sourceFile, $destinationFile);
-                $this->command->info("Copied: {$i}.jpg");
-            } else {
-                $this->command->warn("Image not found: {$sourceFile}");
+            try {
+                // Fetch the image from the public S3 URL
+                $fileContent = @file_get_contents($sourceUrl);
+
+                if ($fileContent === false) {
+                    $this->command->warn("Image not found or not accessible: {$i}.jpg");
+                    continue;
+                }
+
+                // Store it in the local public disk
+                Storage::disk($destinationDisk)->put($destinationFile, $fileContent);
+
+                $this->command->info("Fetched and stored: {$i}.jpg");
+            } catch (\Exception $e) {
+                $this->command->error("Failed to fetch {$i}.jpg: {$e->getMessage()}");
             }
         }
 
-        $this->command->info('Image copying completed!');
+        $this->command->info('Image fetching completed!');
     }
 }
