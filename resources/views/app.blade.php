@@ -4,6 +4,28 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        {{-- Basic SEO --}}
+        <meta name="description" content="{{ config('app.description', 'Your app description here') }}">
+        <meta name="robots" content="index, follow">
+        <meta name="author" content="{{ config('app.author', '') }}">
+
+        {{-- Canonical --}}
+        <link rel="canonical" href="{{ url()->current() }}">
+
+        {{-- Open Graph --}}
+        <meta property="og:site_name" content="{{ config('app.name') }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ config('app.name') }}">
+        <meta property="og:description" content="{{ config('app.description') }}">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:image" content="{{ asset('og-default.png') }}">
+
+        {{-- Twitter --}}
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ config('app.name') }}">
+        <meta name="twitter:description" content="{{ config('app.description') }}">
+        <meta name="twitter:image" content="{{ asset('og-default.png') }}">
+
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
             (function() {
